@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Baza danych (generowana automatycznie przy starcie serwera)
+oxsp.db
+
+# Logi serwera
+server.log
+
+# Klucz prywatny TLS - nigdy nie wrzucać do repo!
+tls/key.pem
+
+# Certyfikat można wrzucić, ale i tak każdy generuje swój (setup_tls.py)
+tls/cert.pem
+
+# Dokumentacja PDF (duże pliki binarne, nie ma sensu w repo)
+*.pdf
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp

@@ -1,0 +1,13 @@
+# OXSP - Kółko i Krzyżyk przez sieć
+# Projekt Damian Skiba, Piotr Sarnecki - PUS sem. 6
+#
+# Nie używamy żadnych zewnętrznych bibliotek - tylko Python stdlib.
+# Wymagana wersja: Python >= 3.10
+# (składnia str | None wymaga 3.10+, asyncio.start_server od 3.7+)
+#
+# Aby uruchomić:
+#   python server.py      <- terminal 1
+#   python client.py      <- terminal 2 (gracz 1)
+#   python client.py      <- terminal 3 (gracz 2)
+#
+# Konta testowe: player1/pass1  player2/pass2  alice/alice  bob/bob
