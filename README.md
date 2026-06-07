@@ -3,7 +3,36 @@
 Projekt zaliczeniowy z przedmiotu **Projektowanie Usług Sieciowych** (semestr 6).  
 Autorzy: **Damian Skiba**, **Piotr Sarnecki**
 
-Zaimplementowaliśmy własny protokół sieciowy **OXSP** (*OX Secure Protocol*) do gry w kółko i krzyżyk przez TCP. Całość w Pythonie, bez zewnętrznych bibliotek.
+---
+
+## Temat projektu
+
+Zadanie polegało na **zaprojektowaniu i implementacji własnego protokołu warstwy aplikacji** działającego w modelu klient-serwer. Protokół miał być zbudowany nad TCP, a cała komunikacja powinna być opisana przez autorów – tzn. nie używamy HTTP, WebSocket ani żadnego gotowego protokołu aplikacyjnego, tylko wymyślamy własny od zera.
+
+Wybraliśmy grę w **kółko i krzyżyk** jako przykład aplikacji, bo:
+- wymaga stanu po obu stronach (tura, plansza, sesja)
+- trzeba obsłużyć wielu równoczesnych klientów
+- można sensownie pokazać mechanizmy bezpieczeństwa
+
+Projekt realizowany był w dwóch etapach:
+
+**Etap 1** – projekt protokołu:
+- zdefiniowanie wszystkich typów wiadomości i ich pól
+- opis przepływu sesji (nawiązanie połączenia, autentykacja, gra, rozłączenie)
+- dobór mechanizmów bezpieczeństwa i uzasadnienie wyborów
+- diagram stanów serwera i klienta
+
+**Etap 2** – implementacja z rozszerzeniami bezpieczeństwa:
+- pełna implementacja protokołu w Pythonie (`asyncio`, tylko stdlib)
+- tokeny sesji JWT (HMAC-SHA256) zamiast prostego stanu w pamięci
+- ochrona przed replay attacks (`msg_id` + okno czasowe ±30s)
+- rate limiting metodą sliding window
+- keep-alive (PING/PONG) i timeout ruchu
+- szyfrowanie TLS (self-signed RSA 2048)
+
+Protokół nazwaliśmy **OXSP** (*OX Secure Protocol*).
+
+---
 
 ---
 
@@ -140,7 +169,7 @@ Każda wiadomość to obiekt JSON z polami obowiązkowymi:
 
 ## Zasady projektowe
 
-Kod pisaliśmy starając się stosować **SOLID**, **KISS** i **DRY**:
+Kod napisaliśmy stosując zasady: **SOLID**, **KISS** i **DRY**:
 
 - **Single Responsibility** – `engine.py` tylko liczy wygraną, `database.py` tylko SQL, `display.py` tylko wyświetla
 - **Open/Closed** – nowy typ wiadomości = nowa metoda + jeden wpis w słowniku; reszta kodu nienaruszona
